@@ -1,0 +1,9 @@
+development:
+  adapter: async
+
+test:
+  adapter: test
+
+production:
+  adapter: async
+  channel_prefix: dummy_production

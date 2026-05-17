@@ -1,0 +1,50 @@
+<table class="<%= table.table_classes %>">
+  <thead>
+    <tr>
+      <th data-sort="string">Datetime</th>
+      <th data-sort="string">Queue</th>
+      <th data-sort="string">Worker</th>
+      <th data-sort="string">Job ID</th>
+      <th data-sort="string">Status</th>
+      <th data-sort="float">Duration</th>
+      <th>Args</th>
+      <th>Message / Backtrace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if table.data.empty? %>
+      <tr>
+        <td colspan="8"><%= table.empty_message %></td>
+      </tr>
+    <% end %>
+    <% table.data.each do |e| %>
+      <tr>
+        <td><%= format_rm_datetime e[:datetime] %></td>
+        <td><%= e[:queue] %></td>
+        <td><%= e[:worker] %></td>
+        <td><%= e[:jid] %></td>
+        <td><%= status_tag e[:status] %></td>
+        <td class="nowrap"><%= ms e[:duration] %></td>
+        <td class="very-small-text">
+          <% args = e[:job_args] %>
+          <% if args.present? %>
+            <%= args.is_a?(Array) ? args.map(&:inspect).join(', ') : args.inspect %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <td>
+          <% if e[:message].present? %>
+            <div><%= e[:message] %></div>
+          <% end %>
+          <% if e[:error_backtrace].present? %>
+            <pre class="rm-backtrace rm-backtrace-inline"><%= e[:error_backtrace] %></pre>
+          <% end %>
+          <% if e[:message].blank? && e[:error_backtrace].blank? %>
+            -
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

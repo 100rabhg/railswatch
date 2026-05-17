@@ -1,0 +1,19 @@
+Description:
+    Generates initial config and database migration for railswatch
+
+Example:
+    bin/rails generate railswatch:install
+
+    This will create:
+        config/initializers/railswatch.rb
+        db/migrate/TIMESTAMP_create_railswatch_tables.rb
+
+    Primary database setup:
+        keep `config.database_connection_name = nil`
+        bin/rails db:migrate
+
+    Separate database setup:
+        add `railswatch` to config/database.yml
+        set `config.database_connection_name = :railswatch`
+        bin/rails db:migrate
+        bin/rails db:migrate:railswatch

@@ -1,0 +1,30 @@
+<section class="rm-surface rm-widget-card rm-widget-card--table">
+  <header class="rm-widget-card__header">
+    <div>
+      <h2 class="rm-widget-card__title"><%= table.subtitle %></h2>
+    </div>
+
+    <div class="rm-widget-card__actions">
+      <% if table.show_export? %>
+        <%= render "export" %>
+      <% end %>
+    </div>
+  </header>
+
+  <div class="rm-widget-card__body">
+    <% if table.auto_update_interval %>
+      <div class="rm-widget-card__toolbar">
+        <railswatch-autoupdate interval="<%= table.auto_update_interval %>">
+          <label class="rm-toggle">
+            <input type="checkbox" />
+            <span>Auto-update</span>
+          </label>
+        </railswatch-autoupdate>
+      </div>
+    <% end %>
+
+    <div class="rm-table-shell">
+      <%= render table.content_partial_path, table: table %>
+    </div>
+  </div>
+</section>

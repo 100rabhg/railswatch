@@ -1,0 +1,23 @@
+<header class="rm-page-header">
+  <div class="rm-page-header__copy">
+    <p class="rm-page-header__eyebrow"><%= eyebrow %></p>
+    <div class="rm-page-header__title-row">
+      <h1 class="rm-page-header__title"><%= title %></h1>
+      <% if local_assigns[:badge].present? %>
+        <span class="rm-badge"><%= badge %></span>
+      <% end %>
+    </div>
+    <p class="rm-page-header__description"><%= description %></p>
+  </div>
+
+  <div class="rm-page-header__actions">
+    <% if local_assigns[:autoupdate_interval].present? %>
+      <railswatch-autoupdate interval="<%= autoupdate_interval %>">
+        <label class="rm-toggle" id="autoupdate_label">
+          <input type="checkbox" />
+          <span>Auto-update</span>
+        </label>
+      </railswatch-autoupdate>
+    <% end %>
+  </div>
+</header>

@@ -1,0 +1,9 @@
+<%= render 'railswatch/shared/page_header', **page_meta(:index), autoupdate_interval: '10s' %>
+
+<%= render 'overview' %>
+
+<% @widgets.each do |row| %>
+  <div class="row rm-widget-row">
+    <%= render row %>
+  </div>
+<% end %>

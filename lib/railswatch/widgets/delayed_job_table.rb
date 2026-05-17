@@ -1,0 +1,31 @@
+# frozen_string_literal: true
+
+module Railswatch
+  module Widgets
+    class DelayedJobTable < Table
+      def subtitle
+        "Recent Jobs (last #{Railswatch.recent_requests_time_window / 60} minutes)"
+      end
+
+      def data
+        @data ||= Railswatch::Reports::RecentRequestsReport.new(datasource.db).data
+      end
+
+      def empty_message
+        'Nothing to show here. Try to make a few requests in the main app.'
+      end
+
+      def show_export?
+        false
+      end
+
+      def table_classes
+        'table is-fullwidth is-hoverable is-narrow'
+      end
+
+      def content_partial_path
+        'railswatch/railswatch/delayed_job_table_content'
+      end
+    end
+  end
+end

@@ -1,0 +1,6 @@
+<%= render 'railswatch/shared/page_header', **page_meta(:grape) %>
+<div class="rm-widget-stack">
+  <% @widgets.each do |widget| %>
+    <%= render widget %>
+  <% end %>
+</div>

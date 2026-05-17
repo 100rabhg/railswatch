@@ -1,0 +1,50 @@
+<h2 class="rm-panel-section-title">Throughput</h2>
+<railswatch-chart id="throughput_report_chart_mini" type="TIR" legend="RPM" units="rpm" class="chart_mini">
+  <%= raw @throughput_report_data.to_json %>
+</railswatch-chart>
+
+<h2 class="rm-panel-section-title">Average Response Time</h2>
+<railswatch-chart id="response_time_report_chart_mini" type="RT" legend="Response Time" class="chart_mini">
+  <%= raw @response_time_report_data.to_json %>
+</railswatch-chart>
+
+<h2 class="rm-panel-section-title"><%= title %></h2>
+<div class="rm-table-shell">
+  <table class="table is-fullwidth is-hoverable is-narrow is-size-8">
+    <thead>
+      <tr>
+        <th data-sort="string">Datetime</th>
+        <th data-sort="string">Method</th>
+        <th></th>
+        <th data-sort="string">Path</th>
+        <th data-sort="string">Format</th>
+        <th data-sort="int">Status</th>
+        <th data-sort="float">Duration</th>
+        <th data-sort="float">Views</th>
+        <th data-sort="float">DB</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @data.each do |e| %>
+        <tr>
+          <td><%= format_rm_datetime e[:datetime] %></td>
+          <td><%= e[:method] %></td>
+          <td><%= bot_icon e["user_agent"] %></td>
+          <td>
+            <span class="with_external_icon">
+              <%= link_to_path(e) %>
+              <span class="icon external_icon">
+                <%= icon('external') %>
+              </span>
+            </span>
+          </td>
+          <td><%= e[:format] %></td>
+          <td><%= status_tag e[:status] %></td>
+          <td class="nowrap"><%= ms e[:duration] %></td>
+          <td class="nowrap"><%= ms e[:view_runtime] %></td>
+          <td class="nowrap"><%= ms e[:db_runtime] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

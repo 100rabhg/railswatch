@@ -1,0 +1,29 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.2
+  SuggestExtensions: false
+  UseCache: false
+  Exclude:
+    - "coverage/**/*"
+    - "test/dummy/db/**/*"
+    - "vendor/**/*"
+    - db/migrate/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - "test/**/*"
+    - "*.gemspec"
+    - "lib/railswatch/engine.rb"
+    - "lib/generators/railswatch/install/templates/initializer.rb"
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Gemspec/DevelopmentDependencies:
+  Enabled: false

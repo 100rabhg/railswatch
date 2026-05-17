@@ -1,0 +1,13 @@
+<div class="widget">
+  <section class="rm-surface rm-widget-card">
+    <header class="rm-widget-card__header">
+      <div>
+        <h2 class="rm-widget-card__title"><%= chart.subtitle %></h2>
+      </div>
+    </header>
+    <div class="rm-widget-card__body">
+      <%= tag.railswatch_chart(chart.data.to_json.html_safe, id: chart.id, type: chart.type, legend: chart.legend, units: chart.units, class: "chart") %>
+      <p class="rm-widget-card__description"><%= chart.description %></p>
+    </div>
+  </section>
+</div>

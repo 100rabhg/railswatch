@@ -1,0 +1,124 @@
+<section class="rm-overview-grid">
+  <div class="rm-surface rm-overview-panel rm-overview-panel--metrics">
+    <div class="rm-section-heading">
+      <div>
+        <p class="rm-section-heading__eyebrow">Snapshot</p>
+        <h2 class="rm-section-heading__title">Health at a glance</h2>
+      </div>
+      <p class="rm-section-heading__meta">
+        <% if @overview[:latest_request_at].present? %>
+          Last sample <%= format_rm_datetime(@overview[:latest_request_at]) %>
+        <% else %>
+          Waiting for incoming traffic
+        <% end %>
+      </p>
+    </div>
+
+    <div class="rm-kpi-grid">
+      <article class="rm-kpi-card" data-tone="neutral">
+        <span class="rm-kpi-card__label">Total requests</span>
+        <strong class="rm-kpi-card__value"><%= compact_number(@overview[:total_requests]) %></strong>
+        <span class="rm-kpi-card__meta">Requests captured in scope</span>
+      </article>
+
+      <article class="rm-kpi-card" data-tone="healthy">
+        <span class="rm-kpi-card__label">Average response</span>
+        <strong class="rm-kpi-card__value"><%= ms(@overview[:average_duration]) %></strong>
+        <span class="rm-kpi-card__meta">Mean request runtime</span>
+      </article>
+
+      <article class="rm-kpi-card" data-tone="<%= health_tone(@overview[:error_rate]) %>">
+        <span class="rm-kpi-card__label">Error rate</span>
+        <strong class="rm-kpi-card__value"><%= percentage(@overview[:error_rate]) %></strong>
+        <span class="rm-kpi-card__meta">5xx share of observed traffic</span>
+      </article>
+
+      <article class="rm-kpi-card" data-tone="<%= @overview[:slow_requests].positive? ? 'warning' : 'healthy' %>">
+        <span class="rm-kpi-card__label">Slow requests</span>
+        <strong class="rm-kpi-card__value"><%= compact_number(@overview[:slow_requests]) %></strong>
+        <span class="rm-kpi-card__meta">Above <%= Railswatch.slow_requests_threshold %> ms</span>
+      </article>
+
+      <article class="rm-kpi-card" data-tone="neutral">
+        <span class="rm-kpi-card__label">Unique endpoints</span>
+        <strong class="rm-kpi-card__value"><%= compact_number(@overview[:unique_endpoints]) %></strong>
+        <span class="rm-kpi-card__meta">Controllers and actions in window</span>
+      </article>
+    </div>
+  </div>
+
+  <div class="rm-surface rm-overview-panel">
+    <div class="rm-section-heading">
+      <div>
+        <p class="rm-section-heading__eyebrow">Insights</p>
+        <h2 class="rm-section-heading__title">Primary signals</h2>
+      </div>
+    </div>
+
+    <div class="rm-insight-list">
+      <article class="rm-insight-item">
+        <span class="rm-insight-item__label">Busiest endpoint</span>
+        <strong class="rm-insight-item__value"><%= @overview.dig(:busiest_endpoint, :name) || 'No data yet' %></strong>
+        <span class="rm-insight-item__meta"><%= compact_number(@overview.dig(:busiest_endpoint, :count)) %> requests</span>
+      </article>
+
+      <article class="rm-insight-item">
+        <span class="rm-insight-item__label">Slowest p95 endpoint</span>
+        <strong class="rm-insight-item__value"><%= @overview.dig(:slowest_endpoint, :name) || 'No data yet' %></strong>
+        <span class="rm-insight-item__meta"><%= ms(@overview.dig(:slowest_endpoint, :p95_duration)) %> at p95</span>
+      </article>
+    </div>
+  </div>
+
+  <div class="rm-surface rm-overview-panel">
+    <div class="rm-section-heading">
+      <div>
+        <p class="rm-section-heading__eyebrow">Traffic leaders</p>
+        <h2 class="rm-section-heading__title">Most active endpoints</h2>
+      </div>
+    </div>
+
+    <div class="rm-ranking-list">
+      <% if @traffic_leaders.empty? %>
+        <p class="rm-empty-state">No request volume yet.</p>
+      <% else %>
+        <% @traffic_leaders.each_with_index do |row, index| %>
+          <article class="rm-ranking-item">
+            <span class="rm-ranking-item__index"><%= index + 1 %></span>
+            <div class="rm-ranking-item__body">
+              <strong class="rm-ranking-item__title"><%= row[:group] %></strong>
+              <span class="rm-ranking-item__meta"><%= compact_number(row[:count]) %> requests</span>
+            </div>
+            <span class="rm-ranking-item__value"><%= ms(row[:p95_duration]) %></span>
+          </article>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="rm-surface rm-overview-panel">
+    <div class="rm-section-heading">
+      <div>
+        <p class="rm-section-heading__eyebrow">Latency leaders</p>
+        <h2 class="rm-section-heading__title">Highest p95 endpoints</h2>
+      </div>
+    </div>
+
+    <div class="rm-ranking-list">
+      <% if @latency_leaders.empty? %>
+        <p class="rm-empty-state">No latency data yet.</p>
+      <% else %>
+        <% @latency_leaders.each_with_index do |row, index| %>
+          <article class="rm-ranking-item">
+            <span class="rm-ranking-item__index"><%= index + 1 %></span>
+            <div class="rm-ranking-item__body">
+              <strong class="rm-ranking-item__title"><%= row[:group] %></strong>
+              <span class="rm-ranking-item__meta"><%= compact_number(row[:count]) %> requests</span>
+            </div>
+            <span class="rm-ranking-item__value"><%= ms(row[:p95_duration]) %></span>
+          </article>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,111 @@
+.panel-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: none;
+  background: rgba(2, 6, 23, 0.42);
+  backdrop-filter: blur(8px);
+}
+
+.panel-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-left: auto;
+  border-radius: 999px;
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--rm-danger);
+  font-size: 1.35rem;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.cd-panel {
+  position: relative;
+  visibility: hidden;
+  transition: visibility 0s 0.35s;
+}
+
+.cd-panel.cd-panel--is-visible {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.cd-panel__container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 50;
+  width: min(1120px, 92vw);
+  height: 100%;
+  padding: 1rem;
+  transform: translate3d(100%, 0, 0);
+  transition: transform 0.35s ease;
+}
+
+.cd-panel--is-visible .cd-panel__container {
+  transform: translate3d(0, 0, 0);
+}
+
+.cd-panel__container .panel {
+  min-height: 100%;
+  border: 1px solid var(--rm-border);
+  border-radius: 1.6rem;
+  background: var(--rm-bg-elevated);
+  box-shadow: var(--rm-shadow);
+  overflow: hidden;
+  backdrop-filter: blur(18px);
+}
+
+html[data-theme="dark"] .cd-panel__container .panel {
+  background: var(--rm-surface-strong);
+  backdrop-filter: none;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem !important;
+  background: transparent !important;
+  border-bottom: 1px solid var(--rm-border) !important;
+}
+
+.panel-heading .panel-close {
+  margin-left: auto;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.panel-heading .field {
+  width: 100%;
+}
+
+.panel-block {
+  display: block !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+.cd-panel__content {
+  padding: 1rem;
+  max-height: calc(100vh - 7rem);
+  overflow: auto;
+}
+
+.cd-panel__content .rm-table-shell {
+  margin-top: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .cd-panel__container {
+    width: 100vw;
+    padding: 0.5rem;
+  }
+
+  .cd-panel__content {
+    padding: 0.75rem;
+  }
+}

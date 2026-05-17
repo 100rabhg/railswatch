@@ -1,0 +1,28 @@
+<%= render 'railswatch/shared/page_header', **page_meta(:resources), autoupdate_interval: '10s' %>
+
+<% @resources_report.servers.each do |server| %>
+  <section class="rm-resource-group">
+    <div class="rm-resource-group__header">
+      <p class="rm-section-heading__eyebrow">Server</p>
+      <h2 class="rm-resource-group__title"><%= server.name %></h2>
+    </div>
+
+    <div class="rm-resource-grid">
+      <% server.charts.each do |chart| %>
+        <section class="rm-surface rm-widget-card">
+          <header class="rm-widget-card__header">
+            <div>
+              <h3 class="rm-widget-card__title"><%= chart.subtitle %></h3>
+            </div>
+          </header>
+          <div class="rm-widget-card__body">
+            <railswatch-chart id="<%= chart.id %>" type="<%= chart.type %>" legend="<%= chart.legend %>" class="chart">
+              <%= raw chart.data.to_json %>
+            </railswatch-chart>
+            <p class="rm-widget-card__description"><%= chart.description %></p>
+          </div>
+        </section>
+      <% end %>
+    </div>
+  </section>
+<% end %>

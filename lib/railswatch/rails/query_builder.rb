@@ -1,0 +1,20 @@
+# frozen_string_literal: true
+
+module Railswatch
+  module Rails
+    class QueryBuilder
+      def self.compose_from(params)
+        result = {}
+
+        result[:controller] = params[:controller_eq]
+        result[:action] = params[:action_eq]
+        result[:format] = params[:format_eq]
+        result[:status] = params[:status_eq]
+
+        result.delete_if { |_k, v| v.nil? }
+
+        { query: result }
+      end
+    end
+  end
+end

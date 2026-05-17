@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dummy</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+  </head>
+
+  <body>
+    current_user: <%= current_user&.email.presence || "N/A" %>
+    <ul>
+      <li><%= link_to "Home", '/' %></li>
+      <li><%= link_to "About (random sign in)", '/home/about' %></li>
+      <li><%= link_to "Contact", '/home/contact' %></li>
+      <li><%= link_to "Blog", '/home/blog' %></li>
+      <li><%= link_to "Account", '/account/site/about' %></li>
+      <li><%= link_to "Account LONG", '/account/site/about?this=1&here=1&suprtrtdfgfdhhfkkjdfg=1122&dfdsfdsfdsf&url=111111&32432432&ccccc=455' %></li>
+      <li><%= link_to "Account (remote)", '/account/site/about.js' %></li>
+      <li><%= link_to "Crash", '/account/site/crash' %></li>
+      <li><%= link_to "Not Found", '/account/site/not_found' %></li>
+      <li><%= link_to "Redirect", '/account/site/is_redirect' %></li>
+      <li><%= link_to "Grape Users", '/api/users' %></li>
+      <li><%= link_to "Grape No Content", '/api/no_content' %></li>
+      <li><%= link_to "Grape Conflict", '/api/conflict' %></li>
+      <li><%= link_to "Grape Unprocessable Entity", '/api/unprocessable_entity' %></li>
+      <li><%= link_to "Grape Internal Server Error", '/api/internal_server_error' %></li>
+      <li><%= link_to "Grape Ping", '/api/ping' %></li>
+      <li><%= link_to "Grape Crash", '/api/crash' %></li>
+      <br>
+      <li><%= link_to "Railswatch Report", '/railswatch' %></li>
+    </ul>
+    <br/>
+    <%= yield %>
+    <%= format_datetime "hello" %>
+  </body>
+</html>

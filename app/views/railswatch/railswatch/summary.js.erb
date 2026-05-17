@@ -1,0 +1,3 @@
+window.panel.header.html('<%= j report_name(@datasource.query) %>' + window.panel.close);
+window.panel.content.html("<%= j render '/railswatch/railswatch/summary', title: "Requests" %>");
+showPanel();

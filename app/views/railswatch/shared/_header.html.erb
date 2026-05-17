@@ -1,0 +1,39 @@
+<header class="rm-topbar" data-skip-autoupdate>
+  <div class="rm-topbar__brand">
+    <%= link_to railswatch.railswatch_url, class: "rm-brand" do %>
+      <span class="rm-brand__mark">RM</span>
+      <span class="rm-brand__copy">
+        <strong>Railswatch</strong>
+        <small>Observe performance without leaving your app</small>
+      </span>
+    <% end %>
+  </div>
+
+  <div class="rm-topbar__controls">
+    <button type="button" class="rm-icon-button rm-mobile-nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="railswatch-nav">
+      <span class="rm-mobile-nav-toggle__line"></span>
+      <span class="rm-mobile-nav-toggle__line"></span>
+      <span class="rm-mobile-nav-toggle__line"></span>
+      <span class="is-sr-only">Toggle navigation</span>
+    </button>
+
+    <button type="button" class="rm-icon-button" data-theme-toggle aria-label="Toggle color theme">
+      <span class="rm-theme-toggle__icon rm-theme-toggle__icon--sun"><%= icon('sun') %></span>
+      <span class="rm-theme-toggle__icon rm-theme-toggle__icon--moon"><%= icon('moon') %></span>
+      <span class="rm-theme-toggle__label" data-theme-label>Theme</span>
+    </button>
+
+    <%= link_to Railswatch.home_link, class: "rm-icon-button", aria: { label: 'Application home' } do %>
+      <span class="home_icon"><%= icon('home') %></span>
+      <span>Home</span>
+    <% end %>
+  </div>
+
+  <nav id="railswatch-nav" class="rm-nav" aria-label="Primary">
+    <% navigation_items.each do |item| %>
+      <%= link_to item[:path], class: "rm-nav__link #{active?(item[:section])}" do %>
+        <span><%= item[:label] %></span>
+      <% end %>
+    <% end %>
+  </nav>
+</header>

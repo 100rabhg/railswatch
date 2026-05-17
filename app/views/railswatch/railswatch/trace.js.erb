@@ -1,0 +1,9 @@
+<% if @record %>
+  window.panel.header.html("<%= j report_name(@record.record_hash.with_indifferent_access.except(*Railswatch.ignore_trace_headers)) %>" + window.panel.close);
+<% else %>
+  window.panel.header.html(window.panel.close);
+<% end %>
+
+window.panel.content.html("<%= j render '/railswatch/railswatch/trace' %>");
+
+showPanel();

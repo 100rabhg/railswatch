@@ -1,0 +1,28 @@
+# frozen_string_literal: true
+
+require_relative 'boot'
+
+require 'rails/all'
+
+Bundler.require(*Rails.groups)
+require 'railswatch'
+
+module Dummy
+  class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults Rails::VERSION::STRING.to_f
+
+    config.time_zone = 'Europe/Kyiv'
+
+    config.hosts.clear
+
+    config.paths.add 'app/api', glob: '**/*.rb'
+    config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
+    config.eager_load_paths += Dir["#{Rails.root}/app/api/*"]
+
+    # Settings in config/environments/* take precedence over those specified here.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
+  end
+end

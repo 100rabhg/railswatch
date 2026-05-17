@@ -1,0 +1,78 @@
+<% ctx = @record&.request_context.presence %>
+<% bt = @record&.backtrace.presence %>
+
+<% if ctx.present? %>
+  <h2 class="rm-panel-section-title">Request Context</h2>
+  <div class="rm-context-grid">
+    <% if ctx['ip'].present? %>
+      <div class="rm-context-row">
+        <span class="rm-context-label">IP</span>
+        <span class="rm-context-value"><%= ctx['ip'] %></span>
+      </div>
+    <% end %>
+    <% if ctx['user_agent'].present? %>
+      <div class="rm-context-row">
+        <span class="rm-context-label">User Agent</span>
+        <span class="rm-context-value rm-context-ua"><%= ctx['user_agent'] %></span>
+      </div>
+    <% end %>
+    <% if ctx['user'].present? %>
+      <div class="rm-context-row">
+        <span class="rm-context-label">User</span>
+        <span class="rm-context-value">
+          <% ctx['user'].each do |k, v| %>
+            <span class="rm-context-kv"><strong><%= k %>:</strong> <%= v %></span>
+          <% end %>
+        </span>
+      </div>
+    <% end %>
+    <% if ctx['params'].present? %>
+      <div class="rm-context-row">
+        <span class="rm-context-label">Params</span>
+        <span class="rm-context-value">
+          <% ctx['params'].each do |k, v| %>
+            <span class="rm-context-kv"><strong><%= k %>:</strong> <%= v %></span>
+          <% end %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<% if bt.present? %>
+  <h2 class="rm-panel-section-title">Exception Backtrace</h2>
+  <pre class="rm-backtrace"><%= bt.join("\n") %></pre>
+<% end %>
+
+<h2 class="rm-panel-section-title">Trace</h2>
+<div class="rm-table-shell">
+  <table class="table is-fullwidth is-hoverable is-narrow is-size-7">
+    <tbody>
+      <% @data.each do |e| %>
+        <tr>
+          <% if e["group"] == 'db' %>
+            <td class="nowrap has-text-right <%= duration_alert_class(e['duration']) %>">
+              <%= e["duration"] %> ms
+            </td>
+            <td>
+              <%= e["sql"] %>
+            </td>
+          <% elsif e["group"] == 'view' %>
+            <td class="nowrap has-text-right <%= duration_alert_class(extract_duration(e['message'])) %>">
+              <%= extract_duration(e["message"]) %>
+            </td>
+            <td>
+              <%= e["message"] %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+
+      <% if @data.empty? %>
+        <tr>
+          <td>Nothing to show here. Perhaps details about the request already expired. Setting "slow_requests_time_window" equal to "duration" helps keep traces available.</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
