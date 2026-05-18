@@ -4,6 +4,18 @@ require_relative 'boot'
 
 require 'rails/all'
 
+# Pre-load devise (which also loads warden) before Bundler.require so that
+# warden_compat.rb's redefinitions of request/reset_session! and devise's
+# redefinition of default_url_options all happen once here, silently.
+# Bundler.require then treats these gems as already-loaded no-ops.
+begin
+  saved_verbose = $VERBOSE
+  $VERBOSE = nil
+  require 'devise'
+ensure
+  $VERBOSE = saved_verbose
+end
+
 Bundler.require(*Rails.groups)
 require 'railswatch'
 
@@ -20,9 +32,14 @@ module Dummy
     config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
     config.eager_load_paths += Dir["#{Rails.root}/app/api/*"]
 
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration can go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded after loading
-    # the framework and any gems in your application.
+    # Devise::FailureApp is autoloaded lazily and triggers a method-redefinition
+    # warning (default_url_options) when first referenced. Force-load it here,
+    # after routes are available, with warnings silenced.
+    config.after_initialize do
+      saved_verbose = $VERBOSE
+      $VERBOSE = nil
+      Devise.const_get(:FailureApp)
+      $VERBOSE = saved_verbose
+    end
   end
 end
