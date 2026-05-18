@@ -39,6 +39,7 @@ module Dummy
       saved_verbose = $VERBOSE
       $VERBOSE = nil
       Devise.const_get(:FailureApp)
+    ensure
       $VERBOSE = saved_verbose
     end
   end
