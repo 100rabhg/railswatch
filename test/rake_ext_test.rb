@@ -6,7 +6,7 @@ require 'rake'
 Object.send(:remove_const, :APP_RAKEFILE) if defined?(APP_RAKEFILE) # HACK: for warning
 APP_RAKEFILE = File.expand_path('../test/dummy/Rakefile', __dir__)
 load 'rails/tasks/engine.rake'
-load 'rails/tasks/statistics.rake'
+load 'rails/tasks/statistics.rake' if Gem::Version.new(Rails.version) < Gem::Version.new('8.1.0')
 
 require 'bundler/gem_tasks'
 require 'rake/testtask'
