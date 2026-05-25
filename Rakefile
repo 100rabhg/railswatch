@@ -23,9 +23,13 @@ load 'rails/tasks/statistics.rake' if Gem::Version.new(Rails.version) < Gem::Ver
 require 'bundler/gem_tasks'
 require 'rake/testtask'
 begin
+  saved_verbose = $VERBOSE
+  $VERBOSE = nil
   require 'standard/rake'
 rescue LoadError
   nil
+ensure
+  $VERBOSE = saved_verbose
 end
 
 Rake::TestTask.new(:test) do |t|

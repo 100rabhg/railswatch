@@ -17,6 +17,14 @@ ensure
 end
 
 Bundler.require(*Rails.groups)
+
+# These integrations are development dependencies from railswatch.gemspec, so
+# load them explicitly instead of duplicating them in each appraisal Gemfile.
+require 'delayed_job_active_record'
+require 'grape'
+require 'sidekiq'
+require 'sprockets/railtie'
+
 require 'railswatch'
 
 module Dummy
