@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'delayed_job_active_record'
   spec.add_development_dependency 'get_process_mem'
   spec.add_development_dependency 'grape'
-  spec.add_development_dependency 'mimemagic'
+  spec.add_development_dependency 'mimemagic', '0.4.3'
   spec.add_development_dependency 'puma'
   spec.add_development_dependency 'sidekiq'
   spec.add_development_dependency 'simplecov'

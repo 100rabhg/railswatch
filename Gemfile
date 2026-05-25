@@ -18,23 +18,9 @@ gemspec
 gem 'rails', '8.0.0'
 
 gem 'debug'
-gem 'sqlite3'
-
-gem 'simplecov', require: false, group: :test
-
-gem 'grape'
-gem 'sidekiq'
-
-gem 'mimemagic', '0.4.3'
 
 # gem 'elasticsearch-model'
 # gem 'elasticsearch-rails'
-gem 'daemons'
-gem 'delayed_job_active_record'
-
-gem 'puma'
-
-gem 'sprockets-rails'
 
 gem 'devise'
 
@@ -42,11 +28,6 @@ gem 'standard'
 
 gem 'appraisal'
 
-gem 'get_process_mem'
-gem 'sys-cpu'
-gem 'sys-filesystem'
-
-gem 'csv'
 gem 'ostruct'
 
 gem 'minitest', '~> 5.0'

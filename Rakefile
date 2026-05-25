@@ -18,14 +18,18 @@ end
 
 APP_RAKEFILE = File.expand_path('test/dummy/Rakefile', __dir__)
 load 'rails/tasks/engine.rake'
-load 'rails/tasks/statistics.rake'
+load 'rails/tasks/statistics.rake' if Gem::Version.new(Rails.version) < Gem::Version.new('8.1.0')
 
 require 'bundler/gem_tasks'
 require 'rake/testtask'
 begin
+  saved_verbose = $VERBOSE
+  $VERBOSE = nil
   require 'standard/rake'
 rescue LoadError
   nil
+ensure
+  $VERBOSE = saved_verbose
 end
 
 Rake::TestTask.new(:test) do |t|
